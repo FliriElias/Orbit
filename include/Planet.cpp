@@ -22,16 +22,34 @@ Planet::Planet(int64_t _x, int64_t _y, uint64_t _radius, uint64_t _mass) {
 	xVel = 0;
 	yVel = 0;
 
-
-
 }
 
 
 
 void Planet::draw(void) {
-	ofstream CoordinatesFile("output/coordinates.txt");
-	CoordinatesFile << x << ' ' << y << '\n';
-	CoordinatesFile.close();
+	ofstream CoordinatesFile("coordinates.txt");
+	uint64_t _x = x;
+	uint64_t _y = y;
+
+	if (orbit.size() > 2) {
+		vector<coordinates> updatedPoints = {};
+		for (const auto point : orbit) {
+			x = point.x;
+			y = point.y;
+
+			coordinates temp;
+			temp.x = x;
+			temp.y = y;
+			
+			updatedPoints.push_back(temp);
+		}
+
+		for (const auto point : updatedPoints) {
+			CoordinatesFile << point.x << ' ' << point.y << '\n';
+			CoordinatesFile.close();
+		}
+	}
+
 	return;
 }
 

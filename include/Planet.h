@@ -10,6 +10,11 @@ using namespace std;
 // TODO: Verweisen Sie hier auf zusätzliche Header, die Ihr Programm erfordert.
 
 
+struct coordinates {
+	uint64_t x;
+	uint64_t y;
+};
+
 
 class Planet
 {
@@ -25,7 +30,7 @@ public:
 	uint64_t mass;
 
 	uint64_t distanceToCenter;
-	vector<int> orbit;
+	vector<coordinates> orbit;
 
 	uint32_t xVel;
 	uint32_t yVel;
