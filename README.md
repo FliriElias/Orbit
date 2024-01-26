@@ -1,5 +1,5 @@
 
-# Solar Orbit Calculator # Solar Orbit Calculator
+# Solar Orbit Calculator
 
 
 ![Solar System](https://i.imgur.com/7DY1LQw.jpg)
