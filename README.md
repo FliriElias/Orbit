@@ -1,7 +1,8 @@
 
 # Solar Orbit Calculator # Solar Orbit Calculator
 
-![Solar System](https://imgur.com/a/m3aQmqV)
+
+![Solar System](https://i.imgur.com/7DY1LQw.jpg)
 
 ## Overview
 
