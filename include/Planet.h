@@ -3,16 +3,23 @@
 
 #pragma once
 #include <cstdint>
+#include <string>
 #include <vector>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 // TODO: Verweisen Sie hier auf zusätzliche Header, die Ihr Programm erfordert.
 
 
 struct coordinates {
-	uint64_t x;
-	uint64_t y;
+    long double x;
+    long double y;
+};
+
+struct force_coordinates {
+    long double force_x;
+    long double force_y;
 };
 
 
@@ -20,28 +27,35 @@ class Planet
 {
 public:
 
-	static const uint64_t AU;
+	static const int64_t AU;
 	static const long double G;
 	static const uint32_t TIME_STEP;
 
-	int64_t x;
-	int64_t y;
-	uint64_t radius;
-	uint64_t mass;
+    long double x;
+    long double y;
+    long double radius;
+	long double mass;
 
-	uint64_t distanceToCenter;
+    long double distanceToCenter;
 	vector<coordinates> orbit;
 
-	uint32_t xVel;
-	uint32_t yVel;
+    bool sun;
+
+    long double xVel;
+	long double yVel;
 
 
 
 	// Constructor
-	Planet(int64_t _x, int64_t _y, uint64_t _radius, uint64_t _mass);
+	Planet(long double _x, long double _y, long double _radius, long double _mass);
 
 
-	void draw(void);
+    void save_data(const string &path, const string &Time, bool append, bool add_time);
+
+
+    coordinates attraction(const Planet &other);
+
+    void updatePosition(vector<Planet> &planets);
 
 
 };

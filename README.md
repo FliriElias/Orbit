@@ -1,6 +1,6 @@
 
 # Solar Orbit Calculator
-
+### Made by Fliri Elias
 
 ![Solar System](https://i.imgur.com/7DY1LQw.jpg)
 
