@@ -21,6 +21,7 @@ string secondsToTimeString(uint64_t seconds) {
     
 
 
-    string sstm = to_string(seconds) + "s " + to_string(minutes) + "m " + to_string(hours) + "h " + to_string(day) + "d " + to_string(year) + 'y';
+    string sstm = to_string(seconds) + "s-" + to_string(minutes) + "m-" + to_string(hours) + "h-" + to_string(day) + "d-" + to_string(year) + 'y';
+
     return sstm;
 }
