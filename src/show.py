@@ -24,9 +24,12 @@ TIME_STEP = 60*60*24
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Orbits")
 
+#initialize font module
+pygame.font.init()
+
 # icon
-# icon = pygame.image.load(IMAGE_SOURCE_DIR + "/orbit-icon.png")
-# pygame.display.set_icon(icon)
+icon = pygame.image.load(IMAGE_SOURCE_DIR + "/orbit-icon.png")
+pygame.display.set_icon(icon)
 
 # colors
 
@@ -35,41 +38,50 @@ WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 BLUE = (0, 0, 255)
 
+TIME_STR_FONT_COLOR = WHITE
 
+# functions
 
-def get_coordinates(path):
-    
+def read_coord_file(path):
     lines = []
     
     with open(path, 'r') as f:
         lines = f.readlines()
         f.close()
-    
+        
     return lines
 
-
-#fonts
-pygame.font.init()
-my_font = pygame.font.SysFont('Comic Sans MS', 30)
-
-
+def create_font(name, size):
+    # initialize pygame fonts
+    my_font = pygame.font.SysFont(name, size)
+    return my_font
 
 
-lines = get_coordinates(COORDINATE_FILE)
-coord_i = 0
+def render_time_str(font, line_lst, line_i, elem_sep, elem_i, color, antialias=False):
+    # render the time string given a line
+    return font.render(line_lst[line_i].split(elem_sep)[elem_i].strip(), antialias, color)
 
-coords = []
-time_render_lst = []
-for line in range(0, len(lines)):
-    x = float(lines[line].split(" ")[0])
-    y = float(lines[line].split(" ")[1])
+def get_coordinates(lines, font, font_color, font_antialias=False):
+    # get (x, y) , time_str from lines
+    coords = []
+    time_render_lst = []
+    
+    elem_seperator = " "
+    
+    x_coord_index = 0;
+    y_coord_index = 1
+    time_str_index = 2
+    
+    
+    for line_i in range(0, len(lines)):
+        x = float(lines[line_i].split(elem_seperator)[x_coord_index])
+        y = float(lines[line_i].split(elem_seperator)[y_coord_index])
 
-    time_render_lst.append(my_font.render(lines[line].split(" ")[2].strip(), False, WHITE))
+        time_render_lst.append(render_time_str(font, lines, line_i, elem_seperator, time_str_index, font_color, font_antialias))
 
-    coords.append((x, y))
-
-coord_num = 0
-
+        coords.append((x, y))
+    
+    return (coords, time_render_lst)
 
 def draw(Surface, coordinates, radius, color):
     x, y = coordinates
@@ -80,7 +92,12 @@ def draw(Surface, coordinates, radius, color):
 
 
 
+font_comic_sans_ms_30 = create_font('Comic Sans MS', 30)
 
+lines = read_coord_file(COORDINATE_FILE)
+
+coord_i = 0
+coords, time_render_lst = get_coordinates(lines, font_comic_sans_ms_30, TIME_STR_FONT_COLOR)
 
 
 
@@ -100,7 +117,7 @@ while running:
     x = coords[coord_i][0]
     y = coords[coord_i][1]
 
-    print(x, y)
+
     draw(screen, (x, y), 20, BLUE)
     screen.blit(time_render_lst[coord_i], (0,0))
 
@@ -108,7 +125,6 @@ while running:
         coord_i += 1
     else:
         coord_i = 0
-    
     
     
     pygame.display.update()
